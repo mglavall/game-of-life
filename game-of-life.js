@@ -8,9 +8,9 @@ var cellsPerLine;
 var cellsPerRow;
 var cells = [];
 var colors = new Map();
-colors.set("alive", "#E28413");
-colors.set("dead", "#000022");
-colors.set("haveBeenAlive", "#EEEEEE")
+colors.set("alive", "#FF1654");
+colors.set("dead", "#247BA0");
+colors.set("haveBeenAlive", "#F3FFBD")
 
 function init() {
   canvas = document.getElementById('canvas');
