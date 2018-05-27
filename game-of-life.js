@@ -8,9 +8,10 @@ var cellsPerLine;
 var cellsPerRow;
 var cells = [];
 var colors = new Map();
-colors.set("alive", "#FF1654");
-colors.set("dead", "#247BA0");
-colors.set("haveBeenAlive", "#F3FFBD")
+colors.set("alive", ["#E71D36", "#FF9F1C"]);
+colors.set("dead", "#011627");
+colors.set("haveBeenAlive", ["#AEE4FA", "#FDFFFC", "#B3E9E4"]);
+const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 function init() {
   canvas = document.getElementById('canvas');
@@ -44,12 +45,11 @@ function init() {
   setNeighbors();
 
   //initial cells
-  const randomInt = (min, max) =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
+
   for (var i = 0; i < 1000; i++) {
     const cell = cells[randomInt(0, cells.length - 1)];
     cell.set("isAlive", true);
-    ctx.fillStyle = colors.get("alive");
+    ctx.fillStyle = colors.get("alive")[randomInt(0, 1)];
     ctx.fillRect(cell.get("x"), cell.get("y"), cellSize, cellSize);
   }
   anim();
@@ -91,11 +91,11 @@ function anim() {
     cell.set("isAlive", cell.get("willLive"));
 
     if (cell.get("isAlive")) {
-      ctx.fillStyle = colors.get("alive");
+      ctx.fillStyle = colors.get("alive")[randomInt(0, 1)];
       cell.set("haveBeenAlive", true);
     } else {
       if (cell.get("haveBeenAlive")) {
-        ctx.fillStyle = colors.get("haveBeenAlive");
+        ctx.fillStyle = colors.get("haveBeenAlive")[randomInt(0, 2)];
       } else {
         ctx.fillStyle = colors.get("dead");
       }
