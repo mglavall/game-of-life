@@ -7,6 +7,10 @@ var cellMargin = 2;
 var cellsPerLine;
 var cellsPerRow;
 var cells = [];
+var colors = new Map();
+colors.set("alive", "#E28413");
+colors.set("dead", "#000022");
+colors.set("haveBeenAlive", "#EEEEEE")
 
 function init() {
   canvas = document.getElementById('canvas');
@@ -28,7 +32,8 @@ function init() {
       var cell = new Map();
       cell.set("isAlive", false);
       cell.set("willLive", false);
-      ctx.fillStyle = '#eee';
+      cell.set("haveBeenAlive", false);
+      ctx.fillStyle = colors.get("dead");
       cells.push(cell);
       cell.set("x", (cellSize + cellMargin) * n);
       cell.set("y", (cellSize + cellMargin) * i);
@@ -37,12 +42,14 @@ function init() {
   }
 
   setNeighbors();
+
+  //initial cells
   const randomInt = (min, max) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
   for (var i = 0; i < 1000; i++) {
     const cell = cells[randomInt(0, cells.length - 1)];
     cell.set("isAlive", true);
-    ctx.fillStyle = "#5be";
+    ctx.fillStyle = colors.get("alive");
     ctx.fillRect(cell.get("x"), cell.get("y"), cellSize, cellSize);
   }
   anim();
@@ -50,7 +57,6 @@ function init() {
 
 function setNeighbors() {
   cells.forEach((cell, i) => {
-    debugger;
     var neighbors = [];
     if (i != 0) {
       neighbors.push(cells[i - 1]);
@@ -80,12 +86,19 @@ function anim() {
   });
 
   cells.forEach((cell, i) => {
-    if (cell.get("isAlive") == cell.get("willLive")) { return };
+    if (cell.get("isAlive") == cell.get("willLive")) { return };//didn't change the state
+
     cell.set("isAlive", cell.get("willLive"));
+
     if (cell.get("isAlive")) {
-      ctx.fillStyle = "#5be";
+      ctx.fillStyle = colors.get("alive");
+      cell.set("haveBeenAlive", true);
     } else {
-      ctx.fillStyle = "#eee";
+      if (cell.get("haveBeenAlive")) {
+        ctx.fillStyle = colors.get("haveBeenAlive");
+      } else {
+        ctx.fillStyle = colors.get("dead");
+      }
     }
     ctx.fillRect(cell.get("x"), cell.get("y"), cellSize, cellSize);
   })
