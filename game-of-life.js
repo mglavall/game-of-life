@@ -22,8 +22,8 @@ function init() {
   cellMargin = 2;
   canvas.width = dimension[0];
   canvas.height = dimension[1];
-  cellsPerLine = canvas.width / (cellSize + cellMargin);
-  cellsPerRow = canvas.height / (cellSize + cellMargin)
+  cellsPerLine = Math.floor(canvas.width / (cellSize + cellMargin));
+  cellsPerRow = Math.floor(canvas.height / (cellSize + cellMargin));
   cells = [];
 
 
@@ -41,6 +41,7 @@ function init() {
       ctx.fillRect(cell.get("x"), cell.get("y"), cellSize, cellSize);
     }
   }
+  debugger;
 
   setNeighbors();
 
