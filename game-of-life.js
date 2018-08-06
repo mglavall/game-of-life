@@ -41,7 +41,6 @@ function init() {
       ctx.fillRect(cell.get("x"), cell.get("y"), cellSize, cellSize);
     }
   }
-  debugger;
 
   setNeighbors();
 
