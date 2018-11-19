@@ -1,2 +1,1 @@
-# game-of-life
-Experimental stuff with the game of life cellular automaton
+![](https://github.com/mglavall/game-of-life/blob/master/preview.PNG)
